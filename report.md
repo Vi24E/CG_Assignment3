@@ -9,35 +9,41 @@ Bounding Volume Hierarchyを実装した。
 
 Bounding Volume Hierarchyとは、オブジェクト群を再帰的に分割し、それを包むラップであるAABBを木構造にしたものである。レイとの衝突判定においては、木をDFS順に探索することで、オブジェクトが十分小さい環境下でおおよそ対数時間での衝突判定が可能になる。
 
+レポジトリ: https://github.com/Vi24E/CG_Assignment3
+
 以下はテストデータのレイトレース結果である。
-![BMW](result/bmw.png)
-*図1: BMWモデルのレンダリング結果*
-
-![Bunny](result/bunny.png)
-*図2: Bunnyモデルのレンダリング結果*
-
-![Buddha](result/buddha.png)
-*図3: Buddhaモデルのレンダリング結果*
-
-![CornellBox-Sphere](result/CornellBox-Sphere.png)
-*図4: CornellBox-Sphereモデルのレンダリング結果*
-
-![CornellBox-Water](result/CornellBox-Water.png)
-*図5: CornellBox-Waterモデルのレンダリング結果*
+<div align="center">
+  <img src="result/bmw.png" width="60%">
+  <br><em>図1: BMWモデルのレンダリング結果</em>
+  <br><br>
+  <img src="result/bunny.png" width="60%">
+  <br><em>図2: Bunnyモデルのレンダリング結果</em>
+  <br><br>
+  <img src="result/buddha.png" width="60%">
+  <br><em>図3: Buddhaモデルのレンダリング結果</em>
+  <br><br>
+  <img src="result/CornellBox-Sphere.png" width="60%">
+  <br><em>図4: CornellBox-Sphereモデルのレンダリング結果</em>
+  <br><br>
+  <img src="result/CornellBox-Water.png" width="60%">
+  <br><em>図5: CornellBox-Waterモデルのレンダリング結果</em>
+</div>
 ## 2. 結果の分析
 各モデルの規模（三角形の数）に対するパフォーマンスの変化を以下のグラフに示す。横軸は三角形の数であり、対数スケールで表示している。Build time以外は262,144本のレイについての合計時間である。
 
-![Build Time](analysis/build_time.png)
-*図6: モデルの三角形数とBVH構築時間の関係(両対数)*
-
-![Render Time](analysis/render_time.png)
-*図7: モデルの三角形数とレンダリング時間の関係(片対数)*
-
-![AABB Tests](analysis/aabb_tests.png)
-*図8: モデルの三角形数とAABB交差判定回数の関係(片対数)*
-
-![Triangle Tests](analysis/tri_tests.png)
-*図9: モデルの三角形数と三角形交差判定回数の関係(片対数)*
+<div align="center">
+  <img src="analysis/build_time.png" width="60%">
+  <br><em>図6: モデルの三角形数とBVH構築時間の関係(両対数)</em>
+  <br><br>
+  <img src="analysis/render_time.png" width="60%">
+  <br><em>図7: モデルの三角形数とレンダリング時間の関係(片対数)</em>
+  <br><br>
+  <img src="analysis/aabb_tests.png" width="60%">
+  <br><em>図8: モデルの三角形数とAABB交差判定回数の関係(片対数)</em>
+  <br><br>
+  <img src="analysis/tri_tests.png" width="60%">
+  <br><em>図9: モデルの三角形数と三角形交差判定回数の関係(片対数)</em>
+</div>
 
 全体的にSAHが優秀な成績を残した。Buildにかかる時間は他のアルゴリズムに比べるとやや長いが、レンダリング時間および三角形衝突判定回数およびAABB衝突判定回数は他のアルゴリズムに比べて圧倒的に少なかった。また、その改変アルゴリズムは0.5乗のものは木の再分割を考慮した、1.5乗のものは木のアンバランスさを改善することを目的としていたが、実際には改善が見られなかった。これは前者は木の大きさが偏りやすく、後者はオブジェクトの中央値による分割がSAHに劣ることによる。
 
